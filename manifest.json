@@ -1,0 +1,32 @@
+{
+    "manifest_version": 3,
+    "name": "Learn With Fun",
+    "description": "Build a strong vocabulary base!",
+    "version": "1.0",
+    "icons": {
+      "16": "/images/icon_16.png"
+    },
+    "permissions": [
+      "tabs",
+      "activeTab",
+      "scripting",
+      "storage"
+      ],
+    "background": {
+      "service_worker": "background-wrapper.js"
+     },
+     "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["js/content.js"]
+      }
+    ],
+    "action": {
+        "persistent": true,
+        "default_icon": "images/icon_16.png"
+      },
+      "host_permissions": [
+        "*://*/*"
+    ]  
+  }
+
