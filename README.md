@@ -1,5 +1,5 @@
 ## Learn With Fun
-> It's a chrome extension which will pop up a new english word daily or as per user setup
+> It's a chrome extension which will pop up a new english word daily or as per user setup. 
 > Built using Vanilla JavaScript.
 
 ```
@@ -13,7 +13,7 @@ Features need to develop (Requirements)
  + set time interval 
 
 | MUST HAVE | SHOULD HAVE | COULD HAVE | WON'T HAVE |
-         | ------ | ------ | ------ | ------ |
+| ------ | ------ | ------ | ------ |
 |pop-up dialog | know more button | word preferance | word with funny gif image |         
 |word fetch api | on-off button (settings page) |
 
