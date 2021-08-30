@@ -1,5 +1,6 @@
 ## Learn With Fun
 > It's a chrome extension which will pop up a new english word daily or as per user setup
+> Built using Vanilla JavaScript.
 
 ```
 Features need to develop (Requirements)
@@ -11,6 +12,10 @@ Features need to develop (Requirements)
  + set word preferance (as a option to the user) as easy, medium, hard
  + set time interval 
 
+| MUST HAVE | SHOULD HAVE | COULD HAVE | WON'T HAVE |
+         | ------ | ------ | ------ | ------ |
+|pop-up dialog | know more button | word preferance | word with funny gif image |         
+|word fetch api | on-off button (settings page) |
 
 ```
 Phase 1 : alert a word in window after open chrome
@@ -22,7 +27,7 @@ Phase 1 : alert a word in window after open chrome
 Phase 2 : keep a timer count in storage
 ```
 + declare a function expression with get and send functionality
-    + using sync storage so that every chrome browser(login with same G-mail id) from diffrent syatem can show thw same funcionality 
+    + using sync storage so that every chrome browser (login with same G-mail id) from diffrent syatem can show thw same funcionality 
 + using setInterval, keep update the storage
 + console log to check the value
 
@@ -37,7 +42,11 @@ Phase 3 : alert a word after certain interval
 ```
 Phase 4 : Instead of alert, build a pop-up UI
 ```
- 
++ create a dialog element dynamically 
++ put the word to this dialog
++ check if dialog is open or not
+    + If open simply overide the new word value
+    + otherwise put the value and show the dialog/modal
 
 ```
 Phase 5 : add random funny gif imgage on the pop-up

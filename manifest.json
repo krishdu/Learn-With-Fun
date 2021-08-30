@@ -23,8 +23,15 @@
     ],
     "action": {
         "persistent": true,
-        "default_icon": "images/icon_16.png"
+        "default_icon": "images/icon_16.png",
+        "default_popup": "popup.html"
       },
+       "web_accessible_resources": [
+        {
+          "resources": [ "*.html" ],
+          "matches": [ "*://*/*" ]
+        }
+      ],
       "host_permissions": [
         "*://*/*"
     ]  
