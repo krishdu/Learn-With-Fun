@@ -8,14 +8,16 @@ Features need to develop (Requirements)
 
  + Popup random new english word (use google api later stage)
  + Popup will display with a funny gif image
- + If user click 'know more' it will redirect to it's explaination (include google api later stage) 
+ + If user click 'know more' it will redirect to it's explanation (include google api later stage) 
  + set word preferance (as a option to the user) as easy, medium, hard
- + set time interval 
+ + user can set time interval at with they want to show pop-ups
+ + if browser is inactive put the word in sync storage so that user can can show that when he active the browser
 
 | MUST HAVE | SHOULD HAVE | COULD HAVE | WON'T HAVE |
 | ------ | ------ | ------ | ------ |
-|pop-up dialog | know more button | word preferance | word with funny gif image |         
+|pop-up dialog | know more button | word preference | word with funny gif image |         
 |word fetch api | on-off button (settings page) |
+| | set interval (settings page) | sync timer with other system| 
 
 ```
 Phase 1 : alert a word in window after open chrome
@@ -27,7 +29,7 @@ Phase 1 : alert a word in window after open chrome
 Phase 2 : keep a timer count in storage
 ```
 + declare a function expression with get and send functionality
-    + using sync storage so that every chrome browser (login with same G-mail id) from diffrent syatem can show thw same funcionality 
+    + using sync storage so that every chrome browser (login with same G-mail id) from different system can show the same funcionality 
 + using setInterval, keep update the storage
 + console log to check the value
 
@@ -49,5 +51,7 @@ Phase 4 : Instead of alert, build a pop-up UI
     + otherwise put the value and show the dialog/modal
 
 ```
-Phase 5 : add random funny gif imgage on the pop-up
+Phase 5 : fetch data from API
 ```
++ make API request using fetch asynchronous method
++ if this will get the expected data, then display it as pop-up

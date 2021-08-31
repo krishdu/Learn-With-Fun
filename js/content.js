@@ -1,17 +1,28 @@
+/*  demo api */
+// https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5
 
 function generateARandomWord(){
-    let words = ['able','about','account','acid','across','act','addition','adjustment','advertisement','agreement','after','again','against','air','all','almost','among','amount','amusement','and','angle','angry','animal']; 
-    let pickElmentIndex = Math.floor(Math.random() * words.length);
-    return words[pickElmentIndex];
+    // let words = ['able','about','account','acid','across','act','addition','adjustment','advertisement','agreement','after','again','against','air','all','almost','among','amount','amusement','and','angle','angry','animal']; 
+    // let pickElmentIndex = Math.floor(Math.random() * words.length);
+    // return words[pickElmentIndex];
+    const URL = 'https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5';
+    fetch(URL)
+        .then(response => response.json())
+        .then(function(json) {
+             let randomWord = json[0].word;
+             showModal(randomWord);
+        }).catch(function(err) {
+            console.log('Fetch problem: ' + err.message);
+        });
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     /* We received a message, let's do as instructed */
-    console.log("content");
+   // console.log("content");
     if (request.action === 'displayWord') {
         sendResponse({acknowledgement: "received background message"});
          // alert(generateARandomWord());
-         showModal(generateARandomWord());
+        generateARandomWord();
     }
 });
 
