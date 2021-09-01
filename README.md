@@ -13,11 +13,6 @@ Features need to develop (Requirements)
  + user can set time interval at with they want to show pop-ups
  + if browser is inactive put the word in sync storage so that user can can show that when he active the browser
 
-| MUST HAVE | SHOULD HAVE | COULD HAVE | WON'T HAVE |
-| ------ | ------ | ------ | ------ |
-|pop-up dialog | know more button | word preference | word with funny gif image |         
-|word fetch api | on-off button (settings page) |  sync timer with other system | 
-| | set interval (settings page) |
 
 ```
 Phase 1 : alert a word in window after open chrome
