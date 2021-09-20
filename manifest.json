@@ -4,7 +4,10 @@
     "description": "Build a strong vocabulary base!",
     "version": "1.0",
     "icons": {
-      "16": "/images/icon_16.png"
+        "16": "/images/icon_16x16.png",
+        "32": "/images/icon_32x32.png",
+        "48": "/images/icon_48x48.png",
+        "128": "/images/icon_128x128.png"
     },
     "permissions": [
       "tabs",
@@ -23,8 +26,13 @@
     ],
     "action": {
         "persistent": true,
-        "default_icon": "images/icon_16.png",
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_icon":{ 
+          "16": "/images/icon_16x16.png",
+          "32": "/images/icon_32x32.png",
+          "48": "/images/icon_48x48.png",
+          "128": "/images/icon_128x128.png"
+        }
       },
        "web_accessible_resources": [
         {

@@ -1,29 +1,54 @@
+let intervalID = '';
+
+/* get timer setting value as true or false from local storage with promise */
+const timerOnOffSettings = {
+  getTimerOnOff:() => {
+    return new Promise(function(resolve, reject){
+     chrome.storage.sync.get(['isTimerOn'], function(result) {
+        if (chrome.runtime.lastError) {
+          return reject(chrome.runtime.lastError);
+        }
+        resolve(result.isTimerOn);
+     });
+    });   
+  } 
+}
+
 const timeLeftTimer = {
   /* set timer value in local storage */
   setTimeLeftTimer: (time) =>{
     return new Promise((resolve, reject) => {
     chrome.storage.sync.set({timeLeft : time}, function() {
+        if(chrome.runtime.lastError) {
+          return reject(chrome.runtime.lastError);
+        }
         resolve(time);
       });
     });
   },
 
-  /* get timer value from local storage with promise*/
+  /* get timer value from local storage with promise */
   getTimeLeftTimer:() => {
     return new Promise(function(resolve, reject){
      chrome.storage.sync.get(['timeLeft'], function(result) {
+        if(chrome.runtime.lastError) {
+          return reject(chrome.runtime.lastError);
+        }
         resolve(result.timeLeft);
      });
     });   
   } 
 }
 
+/* set a default value in local storage */
+
 async function setDefaultTimerValue(){
   try{
-      var updatedTime = await timeLeftTimer.setTimeLeftTimer(10); //default timer in 10 sec
+      var updatedTime = await timeLeftTimer.setTimeLeftTimer(20); //default timer in 20 sec
       console.log(`Default timer value set to -> ${updatedTime} second`);
+        startCountdown();
   }catch(err){
-    console.error(err)
+    console.error(err);
   }
 }
 
@@ -34,7 +59,7 @@ async function onBrowserLoad(){
     if(!timeLeft || timeLeft <= 0)
       setDefaultTimerValue();
   }catch(err){
-    console.error(err)
+    console.error(err);
   }
 }
 
@@ -42,14 +67,14 @@ async function onBrowserLoad(){
 onBrowserLoad();
 
 /* the function keep updating the value in storage whenever interval come*/
-async function updateCoutdown(intervalID) {
+async function updateCoutdown() {
     try{
       var timeLeft = await timeLeftTimer.getTimeLeftTimer();
       if(timeLeft > 0){
         var updatedTime = await timeLeftTimer.setTimeLeftTimer(timeLeft - 3);
         console.log(`updated time ${updatedTime}`);
       }else{
-        displayAlert(intervalID);
+          displayAlert();
       }
     }catch(err){
        console.error(err)
@@ -58,56 +83,64 @@ async function updateCoutdown(intervalID) {
 
 /* countdown timer will be running as long as the word is not pop-up */
 function countdown(){
-  var intervalID = setInterval(()=>{
-    updateCoutdown(intervalID);
-  }, 3000);
+  intervalID = setInterval(()=>{
+    updateCoutdown();
+  }, 3*1000);
+}
+
+async function startCountdown(){
+  try{
+    var getOnoffSettings = await timerOnOffSettings.getTimerOnOff();
+    if(getOnoffSettings && !intervalID){
+      countdown();
+    }else{
+      console.log(`already a interval${intervalID} running or setting is off`);
+    }
+  }catch(e){
+    console.error(e);
+  }
 }
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if(changeInfo.status === 'complete' && /^http/.test(tab.url)){
-    countdown();
-   // injectContentScript(tabId);
+    startCountdown();
   }
 });
 
-async function displayAlert(intervalID){
+async function displayAlert(){
+  try{
+    var getOnoffSettings = await timerOnOffSettings.getTimerOnOff();
+    if(getOnoffSettings){
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      // injectContentScript(tabs[0].id);
+        if(tabs.length != 0){
+            chrome.tabs.sendMessage(tabs[0].id, { action: 'displayWord' }, 
+                function(response) {
+                  response?console.log(response.acknowledgement):console.log("No response from content script");
+                });
+          }else{
+            console.log("No active tab found");
+          }
+      });
+    }
+  }catch(e){
+    console.error(e);
+  }
+  
   clearInterval(intervalID);
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-   // injectContentScript(tabs[0].id);
-     if(tabs.length != 0){
-        chrome.tabs.sendMessage(tabs[0].id, { action: 'displayWord' }, 
-            function(response) {
-              response?console.log(response.acknowledgement):console.log("No response from content script");
-            });
-      }else{
-        console.log("No active tab found");
-      }
-  });
-
+  intervalID = '';
+  
   setDefaultTimerValue();
-  countdown();
+  //startCountdown();
 }
 
-/* Inject content script in the active chrome tab */
-// function injectContentScript(tabId){
-//     chrome.scripting.executeScript({
-//       target: {tabId: tabId},
-//       files: ['js/content.js']
-//     })
-//     .then(() => {
-//         console.log("Injected Contenct Script");
-//     })
-//     .catch(err => console.error(err));
-// }
-
-//---------- on extension icon clcik--------------//
-
-// chrome.action.onClicked.addListener(function (tab) {
-//   /* Send a message to the active tab's content script */
-//   chrome.tabs.sendMessage(tab.id, { action: 'saySomething' },
-//    function(response) {
-//     console.log(response.farewell);
-//   });
-// });
-
+/* listen the message to open a new tab and display word details */
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if(request.action === 'openKnowMoreTab'){
+    console.log(request.searchWord)
+    chrome.tabs.create({
+        url: 'https://www.merriam-webster.com/dictionary/'+request.searchWord
+      });
+  }
+});
 

@@ -6,10 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/popup.styles.css">
 </head>
 
-<body>
-    <p>Test Popup</p>
+<body class="gr-popup-wrapper">
+    <div class="container p-2">
+        <h3 class="text-primary text-center">
+            <i class="fa fa-language" aria-hidden="true"
+                style='font-size:30px; margin-right: 10px; margin-top: 5px;'></i>Learn With Fun
+        </h3>
+        <hr>
+        <div class="text-dark p-1">
+            <h5>Quick Settings
+                <i class="fa fa-cog" aria-hidden="true" style='font-size:20px;'></i>
+            </h5>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="text-center">
+                    <h5>OFF</h5>
+                    <label class="switch">
+                        <input type="checkbox" id="btnOnOff" checked>
+                        <span class="slider round"></span>
+                    </label>
+                    <h5>ON</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/popup.script.js"></script>
 </body>
 
 </html>
