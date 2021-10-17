@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Learn With Fun",
-    "description": "Build a strong vocabulary base!",
+    "description": "Build a strong vocabulary base!\nLearn a new english word daily while browsing.",
     "version": "1.0",
     "icons": {
         "16": "/images/icon_16x16.png",

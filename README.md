@@ -69,3 +69,10 @@ Phase 7: Implement on-off button from pop-up
 + every time before showing doalog check this value and then show the dialog
 + on extension load check this value then start the countdown.
 
+```
+Phase 8: Implement custom interval set functionality button from pop-up
+```
++ create a progress
++ store the setting value in local storage
++ every time before show pop-up, set the value first
++ for setting default interval value set the timer from interval stored in local storage

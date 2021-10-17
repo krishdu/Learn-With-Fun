@@ -1,3 +1,4 @@
+
 const timerOnOffSettings = {
   /* set timer setting as true for on and false for off in local storage */
   setTimerOnOff: (value) =>{
@@ -39,6 +40,7 @@ btnOnOff.addEventListener("click", () => {
     changeOnOffSettings();
 });
 
+//upon loading the pop-up show the updated setting for on-off button
 async function setPreviousOnOffSetting(){
     try{
         let getSetting = await timerOnOffSettings.getTimerOnOff();
@@ -56,5 +58,6 @@ async function changeOnOffSettings(){
     console.error(err);
   }
 }
+
 
 

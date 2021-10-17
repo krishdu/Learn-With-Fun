@@ -14,6 +14,20 @@ const timerOnOffSettings = {
   } 
 }
 
+/*------------- get custom interval ------------------*/
+const timerIntervalSettings = {
+  getTimerInterval:() => {
+    return new Promise(function(resolve, reject){
+     chrome.storage.sync.get(['customInterval'], function(result) {
+        if (chrome.runtime.lastError) {
+          return reject(chrome.runtime.lastError);
+        }
+        resolve(result.customInterval);
+     });
+    });   
+  } 
+}
+
 const timeLeftTimer = {
   /* set timer value in local storage */
   setTimeLeftTimer: (time) =>{
@@ -41,12 +55,16 @@ const timeLeftTimer = {
 }
 
 /* set a default value in local storage */
-
 async function setDefaultTimerValue(){
   try{
-      var updatedTime = await timeLeftTimer.setTimeLeftTimer(20); //default timer in 20 sec
+      let interValTime = await timerIntervalSettings.getTimerInterval();
+      if (interValTime)
+          var updatedTime = await timeLeftTimer.setTimeLeftTimer(interValTime);
+      else
+          var updatedTime = await timeLeftTimer.setTimeLeftTimer(25); //default timer in 25 sec
+
       console.log(`Default timer value set to -> ${updatedTime} second`);
-        startCountdown();
+      startCountdown();
   }catch(err){
     console.error(err);
   }
